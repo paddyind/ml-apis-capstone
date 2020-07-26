@@ -78,9 +78,9 @@ def ticket_assignment():
     else:
         input_desc = flask.request.values.get('desc')
         input_short_desc = flask.request.values.get('short_desc')
-        feature_request = input_desc+' '+input_short_desc
+        feature_request = input_short_desc+' '+input_desc
 
-    #print("Before::",feature_request)
+    print("Before::",feature_request)
     feature_request = preprocess_ticket_data(feature_request)
     print("After::",feature_request)
     loaded_model = load('saved_models/Model_KNN.sav')
