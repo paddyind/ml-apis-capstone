@@ -8,7 +8,7 @@ application = Flask(__name__)
 
 @application.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
@@ -35,9 +35,10 @@ def SentimentAnalysis():
     print(text)
     #text = 'i am done'  
     #text = list(text)
-    rt = analyzeSentiment(text)
+    output = analyzeSentiment(text)
     ##js=json.dumps(rt)
-    return jsonify(rt)
+    #return jsonify(rt)
+    return render_template('index.html', result_text='Text Sentiment is $ {}'.format(output))
 
 @application.route('/irispredict', methods=['POST'])
 def iris_prediction():
@@ -80,7 +81,8 @@ def ticket_assignment():
     output = prediction[0]
     #output = 'GRP_0'
     print('Output::',output)
-    return jsonify(output)
+    #return jsonify(output)
+    return render_template('index.html', prediction_text='Ticket assigned to Group $ {}'.format(output))
 
 def preprocess_ticket_data(ticket_text):
     #vectorizing the tweet by the pre-fitted tokenizer instance    
