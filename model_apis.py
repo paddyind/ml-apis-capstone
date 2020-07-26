@@ -43,7 +43,7 @@ def SentimentAnalysis():
     print('text::',text)
     output = analyzeSentiment(text)
     #return jsonify(rt)
-    return render_template('index.html', result_text='Text Sentiment is $ {}'.format(output))
+    return render_template('index.html', result_text='Text Sentiment is {}'.format(output))
 
 @application.route('/irispredict', methods=['POST'])
 def iris_prediction():
@@ -97,7 +97,7 @@ def ticket_assignment():
     #output = 'GRP_0'
     print('Output::',output)
     #return jsonify(output)
-    return render_template('index.html', prediction_text='Ticket assigned to Group $ {}'.format(output))
+    return render_template('index.html', prediction_text='Ticket assigned to Group {}'.format(output))
 
 def preprocess_ticket_data(ticket_text):
     #vectorizing the tweet by the pre-fitted tokenizer instance    
