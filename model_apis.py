@@ -14,7 +14,7 @@ def home():
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
     #return "true"
-    return render_template('index.html', health_text='The services up and running!!')
+    return render_template('index.html', health_text='The API services are up and running!!')
 
 def analyzeSentiment(text):
     #print("read request is working")
@@ -43,7 +43,7 @@ def SentimentAnalysis():
     print('text::',text)
     output = analyzeSentiment(text)
     #return jsonify(rt)
-    return render_template('index.html', result_text='Text Sentiment is {}'.format(output))
+    return render_template('index.html', result_text='Your Comment Sentiment is {}'.format(output))
 
 @application.route('/irispredict', methods=['POST'])
 def iris_prediction():
