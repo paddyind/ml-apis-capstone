@@ -3,4 +3,5 @@ gunicorn==19.9.0
 numpy>=1.9.2
 scikit-learn>=0.22.2
 pandas>=0.19
-en_core_web_sm==2.2.0
+spacy>=2.0.0,<3.0.0
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz#en_core_web_sm
