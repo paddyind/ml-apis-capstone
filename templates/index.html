@@ -12,9 +12,10 @@
 </head>
 
 <body>
+  <center><h1>Machine Learning/Deep Learning Model Deployment</h1></center>
 
   <div class="login">
-    <h1>1. Rest APIs Health check</h1>
+    <h2>1. Rest APIs Health check</h2>
     <form action="{{ url_for('get_healthcheck')}}"method="get">
         <button type="submit" class="btn btn-primary btn-block btn-large">Health Check</button>
     </form>
@@ -24,8 +25,8 @@
   </div>
   <br/>
   <div class="login">
-    <h1>2. Automatic Ticket Assignment</h1>
-    <h3>Short Description or Description is mandatory</h3>
+    <h2>2. Automatic Ticket Assignment</h2>
+    <h5>Short Description or Description is mandatory</h5>
   
        <!-- Main Input For Receiving Query to our ML -->
       <form action="{{ url_for('ticket_assignment')}}"method="post">
@@ -40,7 +41,7 @@
    </div>
  <br/>
  <div class="login">
-	<h1>3. Sentiment Analysis</h1>
+	<h2>3. Sentiment Analysis</h2>
 
      <!-- Main Input For Receiving Query to our ML -->
     <form action="{{ url_for('SentimentAnalysis')}}"method="post">
