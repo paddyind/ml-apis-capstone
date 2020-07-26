@@ -15,14 +15,11 @@
 
   <div class="login">
     <h1>1. Rest APIs Health check</h1>
-
     <form action="{{ url_for('get_healthcheck')}}"method="get">
         <button type="submit" class="btn btn-primary btn-block btn-large">Health Check</button>
     </form>
-
     <br>
-    <br>
-    {{ prediction_text }}
+    <b>{{ health_text }}</b>
 
   </div>
   <br/>
@@ -33,18 +30,14 @@
        <!-- Main Input For Receiving Query to our ML -->
       <form action="{{ url_for('ticket_assignment')}}"method="post">
         <b>Short Description:: </b><input type="text" size="50" name="short_desc" placeholder="Enter a Short Description" /><br /><br />
-        <b>Description:: </b><input type="textarea" size="100" name="desc" placeholder="Enter the long description" /><br /><br />
+        <b>Description:: </b><input type="text" size="100" name="desc" placeholder="Enter the long description" /><br /><br />
         <b>Login Name::  </b><input type="text" size="30" name="username" placeholder="Provide your User Name" required="required" /><br /><br />
         <button type="submit" class="btn btn-primary btn-block btn-large">Assign Group</button>
       </form>
-  
      <br>
-     <br>
-     {{ prediction_text }}
+     <b>{{ prediction_text }}</b>
   
    </div>
- <br/>
- <br/>
  <br/>
  <div class="login">
 	<h1>3. Sentiment Analysis</h1>
@@ -54,13 +47,9 @@
     	<input type="text" name="comment" placeholder="Please enter your comment" size="50" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large">Get Result</button>
     </form>
-
    <br>
-   <br>
-   {{ result_text }}
+   <b>{{ result_text }}</b>
 
  </div>
-
-
 </body>
 </html>

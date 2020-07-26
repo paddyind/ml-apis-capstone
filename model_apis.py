@@ -13,7 +13,7 @@ def home():
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
     #return "true"
-    return render_template('index.html', result_text='The server status is healthy.')
+    return render_template('index.html', health_text='The server status is healthy.')
 
 def analyzeSentiment(text):
     #print("read request is working")
@@ -31,13 +31,13 @@ def analyzeSentiment(text):
 @application.route('/SentimentAnalysis', methods=['POST', 'GET'])
 def SentimentAnalysis():
     #param = request.json
-    print(request.methods)
-    request_method = request.methods[0]
+    request_method = flask.request.method
+    print('request_method ::',request_method)
     if request_method == 'GET':
         param=(request.args.get('input',None))
         text = list(param)
     else:
-        text = [request.form.values()]
+        text = flask.request.values.get('comment')
     print(text)
     output = analyzeSentiment(text)
     #return jsonify(rt)
@@ -61,6 +61,8 @@ def iris_prediction():
 
 @application.route('/ticket/assign', methods=['POST'])
 def ticket_assignment():
+    request_method = flask.request.method
+    print('request_method ::',request_method)
     # Works only for a single sample
     data = request.get_json(force=True)
     # Make prediction using model loaded from disk as per the data.
