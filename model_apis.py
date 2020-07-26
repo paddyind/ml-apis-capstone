@@ -14,7 +14,7 @@ def home():
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
     #return "true"
-    return render_template('index.html', health_text='The server status is healthy.')
+    return render_template('index.html', health_text='The services up and running!!')
 
 def analyzeSentiment(text):
     #print("read request is working")
@@ -94,10 +94,9 @@ def ticket_assignment():
     print('Predicted Group::',prediction)
     # Take the first value of prediction
     output = prediction[0]
-    #output = 'GRP_0'
     print('Output::',output)
     #return jsonify(output)
-    return render_template('index.html', prediction_text='Ticket assigned to Group {}'.format(output))
+    return render_template('index.html', prediction_text='Your ticket is assigned to Group {}'.format(output))
 
 def preprocess_ticket_data(ticket_text):
     #vectorizing the tweet by the pre-fitted tokenizer instance    
