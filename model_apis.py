@@ -12,7 +12,8 @@ def home():
 
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
-    return "true"
+    #return "true"
+    return render_template('index.html', result_text='The server status is healthy.')
 
 def analyzeSentiment(text):
     #print("read request is working")
@@ -30,13 +31,15 @@ def analyzeSentiment(text):
 @application.route('/SentimentAnalysis', methods=['POST', 'GET'])
 def SentimentAnalysis():
     #param = request.json
-    param=(request.args.get('input',None))
-    text = list(param)
+    print(request.methods)
+    request_method = request.methods[0]
+    if request_method == 'GET':
+        param=(request.args.get('input',None))
+        text = list(param)
+    else:
+        text = [request.form.values()]
     print(text)
-    #text = 'i am done'  
-    #text = list(text)
     output = analyzeSentiment(text)
-    ##js=json.dumps(rt)
     #return jsonify(rt)
     return render_template('index.html', result_text='Text Sentiment is $ {}'.format(output))
 
