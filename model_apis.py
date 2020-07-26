@@ -36,10 +36,11 @@ def SentimentAnalysis():
     print('request_method ::',request_method)
     if request_method == 'GET':
         param=(request.args.get('input',None))
-        text = list(param)
     else:
-        text = flask.request.values.get('comment')
-    print(text)
+        param = flask.request.values.get('comment')
+    print('param ::',param)
+    text = list(param)
+    print('text::',text)
     output = analyzeSentiment(text)
     #return jsonify(rt)
     return render_template('index.html', result_text='Text Sentiment is $ {}'.format(output))
@@ -63,7 +64,7 @@ def iris_prediction():
 @application.route('/ticket/assign', methods=['POST'])
 def ticket_assignment():
     request_method = flask.request.method
-    print('request_method ::',request_method)
+    print('ticket_assignment request_method ::',request_method)
     # Works only for a single sample
     data = request.get_json(force=True)
     # Make prediction using model loaded from disk as per the data.
