@@ -20,13 +20,13 @@ def analyzeSentiment(text):
     #print("read request is working")
     sentimentModel = load("saved_models/sentiment_Model.sav")
     label = 0
-    dictionary = {}
+    result = "Positive"
     label  = sentimentModel.predict(text)[0]
     if label == 0:
-        dictionary.update({"Sentiment of tweet is": "Positive"})
+        result = "Positive"
     else:
-        dictionary.update({"Sentiment of tweet is": "Negative"})
-    return dictionary
+        result = "Negative"
+    return result
     
 #http://localhost:9052/SentimentAnalysis?input=this is first tweet
 @application.route('/SentimentAnalysis', methods=['POST', 'GET'])
@@ -66,12 +66,20 @@ def ticket_assignment():
     request_method = flask.request.method
     print('ticket_assignment request_method ::',request_method)
     # Works only for a single sample
-    data = request.get_json(force=True)
-    # Make prediction using model loaded from disk as per the data.
-    api_input=[[data['short_desc'],data['desc'],data['caller']]]
-    print("api_input",api_input)
-    # Extract only short_desc and desc and merge as per model building
-    feature_request=data['short_desc']+' '+data['desc']
+    uname = flask.request.values.get('username')
+    print('uname::',uname)
+    if len(uname)==0:
+        data = request.get_json(force=True)
+        # Make prediction using model loaded from disk as per the data.
+        api_input=[[data['short_desc'],data['desc'],data['caller']]]
+        print("api_input",api_input)
+        # Extract only short_desc and desc and merge as per model building
+        feature_request = data['short_desc']+' '+data['desc']
+    else:
+        input_desc = flask.request.values.get('desc')
+        input_short_desc = flask.request.values.get('short_desc')
+        feature_request = input_desc+' '+input_short_desc
+
     #print("Before::",feature_request)
     feature_request = preprocess_ticket_data(feature_request)
     print("After::",feature_request)
