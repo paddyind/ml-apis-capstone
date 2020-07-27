@@ -7,14 +7,22 @@ from joblib import load
 from flask import Flask,request, jsonify, render_template
 application = Flask(__name__)
 
+# Method to APP mode (GUI or API).
+def get_app_mode(request):
+    app_mode = request.values.get('mode')
+    print('app_mode::',app_mode)
+    return app_mode
+
 @application.route('/')
 def home():
     return render_template('index.html')
-
+    
 @application.route('/healthcheck', methods=['GET'])
 def get_healthcheck():
-    #return "true"
-    return render_template('index.html', health_text='The API services are up and running!!')
+    if get_app_mode(flask.request) == 'gui':
+        return render_template('index.html', health_text='The API services are up and running!!')
+    else:
+        return jsonify('The API services are up and running!!')
 
 def analyzeSentiment(text):
     #print("read request is working")
@@ -42,15 +50,30 @@ def SentimentAnalysis():
     text = list(param)
     print('text::',text)
     output = analyzeSentiment(text)
-    #return jsonify(rt)
-    return render_template('index.html', result_text='Your Comment Sentiment is {}'.format(output))
+    if get_app_mode(flask.request) == 'gui':
+        return render_template('index.html', result_text='Your Comment Sentiment is {}'.format(output))
+    else:
+        return jsonify(output)
 
 @application.route('/irispredict', methods=['POST'])
 def iris_prediction():
     # Works only for a single sample
-    data = request.get_json(force=True)
-    # Make prediction using model loaded from disk as per the data.
-    predict_request=[[data['sl'],data['sw'],data['pl'],data['pw']]]
+    if get_app_mode(flask.request) == 'gui':
+        sepal_len = flask.request.values.get('sl')
+        sepal_wid = flask.request.values.get('sw')
+        petal_len = flask.request.values.get('pl')
+        petal_wid = flask.request.values.get('pw')
+        #print(sepal_len)
+        #print(sepal_wid)
+        predict_request = [[sepal_len,sepal_wid,petal_len,petal_wid]]
+    else:
+        data = request.get_json(force=True)
+        # Make prediction using model loaded from disk as per the data.
+        #print(data['sl'])
+        #print(data['sw'])
+        predict_request=[[data['sl'],data['sw'],data['pl'],data['pw']]]
+    
+    print('Before predict_request',predict_request)
     predict_request=np.array(predict_request)
     print(predict_request)
     model = pickle.load(open('saved_models/iris_Model.sav', 'rb'))
@@ -59,26 +82,27 @@ def iris_prediction():
     # Take the first value of prediction
     output = prediction[0]
     print(output)
-    return jsonify(int(output))
+    if get_app_mode(flask.request) == 'gui':
+        return render_template('index.html', iris_predict_text='Your predicted value is {}'.format(output))
+    else:
+        return jsonify(int(output))
 
 @application.route('/ticket/assign', methods=['POST'])
 def ticket_assignment():
     request_method = flask.request.method
     print('ticket_assignment request_method ::',request_method)
     # Works only for a single sample
-    uname = flask.request.values.get('username')
-    print('uname::',uname)
-    if len(uname)==0:
+    if get_app_mode(flask.request) == 'gui':
+        input_desc = flask.request.values.get('desc')
+        input_short_desc = flask.request.values.get('short_desc')
+        feature_request = input_short_desc+' '+input_desc
+    else:
         data = request.get_json(force=True)
         # Make prediction using model loaded from disk as per the data.
         api_input=[[data['short_desc'],data['desc'],data['caller']]]
         print("api_input",api_input)
         # Extract only short_desc and desc and merge as per model building
         feature_request = data['short_desc']+' '+data['desc']
-    else:
-        input_desc = flask.request.values.get('desc')
-        input_short_desc = flask.request.values.get('short_desc')
-        feature_request = input_short_desc+' '+input_desc
 
     print("Before::",feature_request)
     feature_request = preprocess_ticket_data(feature_request)
@@ -95,8 +119,10 @@ def ticket_assignment():
     # Take the first value of prediction
     output = prediction[0]
     print('Output::',output)
-    #return jsonify(output)
-    return render_template('index.html', prediction_text='Your ticket is assigned to Group {}'.format(output))
+    if get_app_mode(flask.request) == 'gui':
+        return render_template('index.html', prediction_text='Your ticket is assigned to Group {}'.format(output))
+    else:
+        return jsonify(output)
 
 def preprocess_ticket_data(ticket_text):
     #vectorizing the tweet by the pre-fitted tokenizer instance    
