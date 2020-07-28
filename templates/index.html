@@ -3,7 +3,7 @@
 <!--From https://codepen.io/frytyler/pen/EGdtg-->
 <head>
   <meta charset="UTF-8">
-  <title>Machine Learning APIs</title>
+  <title>NLP - Automatic Ticket Assignment</title>
   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -12,10 +12,10 @@
 </head>
 
 <body>
-  <center><h1>Machine Learning/Deep Learning Model Deployment</h1></center>
+  <center><h1>Automatic Ticket Assignment - Model Deployment</h1></center>
 
   <div class="login">
-    <h2>1. Rest APIs Health check</h2>
+    <h2>Rest Services Health check</h2>
     <form action="{{ url_for('get_healthcheck')}}"method="get">
         <button type="submit" class="btn btn-primary btn-block btn-large">Health Check</button>
         <input type="hidden" name="mode" value="gui">
@@ -26,7 +26,7 @@
   </div>
   <br/>
   <div class="login">
-    <h2>2. Automatic Ticket Assignment</h2>
+    <h2>Input Ticket Data/Features</h2>
     <h5>* Short Description or Description is mandatory</h5>
   
        <!-- Main Input For Receiving Query to our ML -->

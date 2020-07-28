@@ -44,10 +44,10 @@ def ticket_assignment():
     print("Before::",feature_request)
     feature_request = preprocess_ticket_data(feature_request)
     print("After::",feature_request)
-    loaded_model = load('saved_models/Model_KNN.sav')
+    loaded_model = load('models/Model_KNN.sav')
     #print('Model loaded successfully')
     # load the vectorizer
-    loaded_vector = load('saved_models/vectorizer.sav')
+    loaded_vector = load('models/vectorizer.sav')
     #print('feature_vector::',loaded_vector)
     # make a prediction
     prediction = loaded_model.predict(loaded_vector.transform([feature_request]))
