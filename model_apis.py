@@ -24,69 +24,6 @@ def get_healthcheck():
     else:
         return jsonify('The API services are up and running!!')
 
-def analyzeSentiment(text):
-    #print("read request is working")
-    sentimentModel = load("saved_models/sentiment_Model.sav")
-    label = 0
-    result = "Positive"
-    label  = sentimentModel.predict(text)[0]
-    if label == 0:
-        result = "Positive"
-    else:
-        result = "Negative"
-    return result
-    
-#http://localhost:9052/SentimentAnalysis?input=this is first tweet
-@application.route('/SentimentAnalysis', methods=['POST', 'GET'])
-def SentimentAnalysis():
-    #param = request.json
-    request_method = flask.request.method
-    print('request_method ::',request_method)
-    if request_method == 'GET':
-        param=(request.args.get('input',None))
-    else:
-        param = flask.request.values.get('comment')
-    print('param ::',param)
-    text = list(param)
-    print('text::',text)
-    output = analyzeSentiment(text)
-    if get_app_mode(flask.request) == 'gui':
-        return render_template('index.html', result_text='Your Comment Sentiment is {}'.format(output))
-    else:
-        return jsonify(output)
-
-@application.route('/irispredict', methods=['POST'])
-def iris_prediction():
-    # Works only for a single sample
-    if get_app_mode(flask.request) == 'gui':
-        sepal_len = flask.request.values.get('sl')
-        sepal_wid = flask.request.values.get('sw')
-        petal_len = flask.request.values.get('pl')
-        petal_wid = flask.request.values.get('pw')
-        #print(sepal_len)
-        #print(sepal_wid)
-        predict_request = [[sepal_len,sepal_wid,petal_len,petal_wid]]
-    else:
-        data = request.get_json(force=True)
-        # Make prediction using model loaded from disk as per the data.
-        #print(data['sl'])
-        #print(data['sw'])
-        predict_request=[[data['sl'],data['sw'],data['pl'],data['pw']]]
-    
-    print('Before predict_request',predict_request)
-    predict_request=np.array(predict_request)
-    print(predict_request)
-    model = pickle.load(open('saved_models/iris_Model.sav', 'rb'))
-    prediction = model.predict(predict_request)  # runs globally loaded model on the data
-    print(prediction)
-    # Take the first value of prediction
-    output = prediction[0]
-    print(output)
-    if get_app_mode(flask.request) == 'gui':
-        return render_template('index.html', iris_predict_text='Your predicted value is {}'.format(output))
-    else:
-        return jsonify(int(output))
-
 @application.route('/ticket/assign', methods=['POST'])
 def ticket_assignment():
     request_method = flask.request.method
