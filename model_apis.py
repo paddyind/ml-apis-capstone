@@ -26,7 +26,7 @@ def get_healthcheck():
 
 def analyzeSentiment(text):
     #print("read request is working")
-    sentimentModel = load("saved_models/sentiment_Model.sav")
+    sentimentModel = load("models/sentiment_Model.sav")
     label = 0
     result = "Positive"
     label  = sentimentModel.predict(text)[0]
@@ -76,7 +76,7 @@ def iris_prediction():
     print('Before predict_request',predict_request)
     predict_request=np.array(predict_request)
     print(predict_request)
-    model = pickle.load(open('saved_models/iris_Model.sav', 'rb'))
+    model = pickle.load(open('models/iris_Model.sav', 'rb'))
     prediction = model.predict(predict_request)  # runs globally loaded model on the data
     print(prediction)
     # Take the first value of prediction
@@ -107,10 +107,10 @@ def ticket_assignment():
     print("Before::",feature_request)
     feature_request = preprocess_ticket_data(feature_request)
     print("After::",feature_request)
-    loaded_model = load('saved_models/Model_KNN.sav')
+    loaded_model = load('models/Model_KNN.sav')
     #print('Model loaded successfully')
     # load the vectorizer
-    loaded_vector = load('saved_models/vectorizer.sav')
+    loaded_vector = load('models/vectorizer.sav')
     #print('feature_vector::',loaded_vector)
     # make a prediction
     prediction = loaded_model.predict(loaded_vector.transform([feature_request]))

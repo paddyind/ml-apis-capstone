@@ -41,36 +41,6 @@
      <b>{{ prediction_text }}</b>
   
    </div>
- <br/>
- <div class="login">
-	<h2>3. Sentiment Analysis</h2>
-
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('SentimentAnalysis')}}"method="post">
-    	<input type="text" name="comment" placeholder="Please enter your comment" size="50" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Get Result</button>
-        <input type="hidden" name="mode" value="gui">
-    </form>
-   <br>
-   <b>{{ result_text }}</b>
-
- </div>
- <div class="login">
-	<h2>4. Iris Data Prediction</h2>
-
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('iris_prediction')}}"method="post">
-      <input type="text" size="10" name="sl" placeholder="Sepal Length" required="required" />
-      <input type="text" size="10" name="sw" placeholder="Sepal Width" required="required" />
-      <input type="text" size="10" name="pl" placeholder="Petal Length" required="required" />
-      <input type="text" size="10" name="pw" placeholder="Petal Width" required="required" />
-      <button type="submit" class="btn btn-primary btn-block btn-large">Get Result</button>
-      <input type="hidden" name="mode" value="gui">
-    </form>
-   <br>
-   <b>{{ iris_predict_text }}</b>
-
- </div>
-
+ 
 </body>
 </html>
