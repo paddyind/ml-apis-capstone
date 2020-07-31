@@ -15,17 +15,6 @@
   <center><h1>Automatic Ticket Assignment - Model Deployment</h1></center>
 
   <div class="login">
-    <h2>Rest Services Health check</h2>
-    <form action="{{ url_for('get_healthcheck')}}"method="get">
-        <button type="submit" class="btn btn-primary btn-block btn-large">Health Check</button>
-        <input type="hidden" name="mode" value="gui">
-    </form>
-    <br>
-    <b>{{ health_text }}</b>
-
-  </div>
-  <br/>
-  <div class="login">
     <h2>Input Ticket Data/Features</h2>
     <h5>* Short Description or Description is mandatory</h5>
   
